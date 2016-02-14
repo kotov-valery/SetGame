@@ -6,7 +6,7 @@ var cardsOnScreen = 0;
 function startGame() {
     if (cardsArray != null) {
         delete cardsArray;
-        content.clear();
+        playgroundModel.clear();
     }
 
     // By now, just generate number, representing the type randomly
@@ -18,10 +18,22 @@ function startGame() {
         cardsArray[i] = Math.floor(Math.random()*2) + 1; // [1,2]
     }
 
-    while(cardsOnScreen < 12) {
+    populateCards();
+}
+
+function populateCards() {
+    while((cardsOnScreen < maxCardsOnScreen) &&
+          (cardsArray.length > 0)) {
+        // Add card with appropriate type on the screen
         playgroundModel.append({
             "cardType" : cardsArray.pop()
         });
         cardsOnScreen++;
     }
+}
+
+function cardClicked(index) {
+    playgroundModel.remove(index);
+    cardsOnScreen--;
+    populateCards();
 }

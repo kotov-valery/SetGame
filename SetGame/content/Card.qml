@@ -17,13 +17,7 @@ Item {
         id: cardContent
         anchors.fill: parent
     }
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            console.log("Card with type " + type + " was clicked");
-        }
-    }
 }
+
 
 

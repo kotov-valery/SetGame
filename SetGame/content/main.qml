@@ -51,6 +51,13 @@ Window {
                 type: cardType
                 width: cardWrapper.width - 5
                 height: cardWrapper.height - 15
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        SetGame.cardClicked(index)
+                    }
+                }
             }
         }
    }
