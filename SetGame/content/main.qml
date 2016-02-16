@@ -42,6 +42,20 @@ Window {
             id: playgroundModel
         }
 
+        add: Transition {
+            PropertyAnimation { properties: "scale"; from: 0; to: 1.0; duration: 1000 }
+        }
+
+        displaced: Transition {
+            NumberAnimation { properties: "x,y"; duration: 1000 }
+        }
+
+        remove: Transition {
+            ParallelAnimation {
+                NumberAnimation { property: "opacity"; to: 0; duration: 1000 }
+            }
+        }
+
         delegate: Item {
             id: cardWrapper
             width: playgroundView.cellWidth

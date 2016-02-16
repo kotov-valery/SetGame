@@ -4,9 +4,9 @@ var maxCardsOnScreen = 12;
 var cardsOnScreen = 0;
 
 function startGame() {
-    if (cardsArray != null) {
-        delete cardsArray;
+    if (cardsOnScreen > 0) {
         playgroundModel.clear();
+        delete cardsArray;
     }
 
     // By now, just generate number, representing the type randomly
