@@ -1,14 +1,16 @@
-var maxCardsCount = 81
 var cardsArray = null;
-var maxCardsOnScreen = 12;
 var cardsOnScreen = 0;
-var maxColumns = 4;
+
 var maxRows = 4; // 4 by default + 1 row for additional cards
+var maxColumns = 4;
+var maxCardsOnScreen = 12; // not quite true... with additional cards there might be 15 cards. but I'll think about it later
+var maxCardsCount = 81
 
 function startGame() {
     if (cardsOnScreen > 0) {
         playgroundModel.clear();
         delete cardsArray;
+        cardsOnScreen = 0;
     }
 
     // By now, just generate number, representing the type randomly
