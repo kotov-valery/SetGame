@@ -1,6 +1,9 @@
 var cardsArray = null;
 var cardsOnScreen = 0;
 
+var chosenCardsIndex = 0;
+var chosenCards = new Array(3);
+
 var maxRows = 4; // 4 by default + 1 row for additional cards
 var maxColumns = 4;
 var maxCardsOnScreen = 12; // not quite true... with additional cards there might be 15 cards. but I'll think about it later
@@ -30,14 +33,18 @@ function populateCards() {
           (cardsArray.length > 0)) {
         // Add card with appropriate type on the screen
         playgroundModel.append({
-            "cardType" : cardsArray.pop()
+            "cardType" : cardsArray.pop(),
+            "cardClicked" : false
         });
         cardsOnScreen++;
     }
 }
 
 function cardClicked(index) {
-    playgroundModel.remove(index);
-    cardsOnScreen--;
-    populateCards();
+//    playgroundModel.remove(index);
+//    cardsOnScreen--;
+//    populateCards();
+
+    var wasClicked = playgroundModel.get(index).cardClicked;
+    playgroundModel.get(index).cardClicked = !wasClicked;
 }

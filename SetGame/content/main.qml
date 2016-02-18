@@ -60,6 +60,7 @@ Window {
 
             Card {
                 type: cardType
+                clicked: cardClicked
                 width: cardWrapper.width - 5
                 height: cardWrapper.height - 15
 
