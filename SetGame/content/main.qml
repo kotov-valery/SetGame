@@ -6,8 +6,8 @@ import "setgame.js" as SetGame
 
 Window {
     id: root
-    width: 450
-    height: 550
+    width: 320
+    height: 480
     visible: true
 
     SystemPalette { id: activePalette }
@@ -27,32 +27,29 @@ Window {
         id: playgroundView
         anchors.fill:background
 
-        cellWidth: 90
-        cellHeight: 140
+        anchors.leftMargin: 20
+        anchors.rightMargin: 20
+        anchors.topMargin: 20
+        anchors.bottomMargin: 20
 
-        header: Item {
-            height: 20
-        }
-
-        footer: Item {
-            height: 20
-        }
+        cellWidth: Math.floor(width / SetGame.maxColumns)
+        cellHeight: Math.floor(height / SetGame.maxRows)
 
         model: ListModel {
             id: playgroundModel
         }
 
         add: Transition {
-            PropertyAnimation { properties: "scale"; from: 0; to: 1.0; duration: 1000 }
+            PropertyAnimation { properties: "scale"; from: 0; to: 1.0; duration: 500 }
         }
 
         displaced: Transition {
-            NumberAnimation { properties: "x,y"; duration: 1000 }
+            NumberAnimation { properties: "x,y"; duration: 500 }
         }
 
         remove: Transition {
             ParallelAnimation {
-                NumberAnimation { property: "opacity"; to: 0; duration: 1000 }
+                NumberAnimation { property: "opacity"; to: 0; duration: 500 }
             }
         }
 

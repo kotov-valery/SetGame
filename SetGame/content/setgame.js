@@ -2,6 +2,8 @@ var maxCardsCount = 81
 var cardsArray = null;
 var maxCardsOnScreen = 12;
 var cardsOnScreen = 0;
+var maxColumns = 4;
+var maxRows = 4; // 4 by default + 1 row for additional cards
 
 function startGame() {
     if (cardsOnScreen > 0) {
