@@ -66,11 +66,6 @@ function cardClicked(index) {
                 }
             }
 
-            // Reset selection
-            for(i=0; i < chosenSetCards.length; i++) {
-//                playgroundModel.get(chosenSetCards[i]).cardClicked = false;
-           }
-
             if(isSet) {
                 console.log("It is a set");
                 // Damn! After we remove the card, the model will move the cards... So, indexes got invalidated...
@@ -91,7 +86,6 @@ function cardClicked(index) {
             for(i=0; i < chosenSetCards.length; i++) {
                 chosenSetCards[i] = -1;
             }
-            currentSetSize = 0;
         }
     }
 
