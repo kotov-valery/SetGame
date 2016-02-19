@@ -1,8 +1,9 @@
 var cardsArray = null;
 var cardsOnScreen = 0;
 
-var chosenCardsIndex = 0;
-var chosenCards = new Array(3);
+var maxSetSize = 3;
+var currentSetSize = 0;
+var chosenSetCards = new Array(maxSetSize);
 
 var maxRows = 4; // 4 by default + 1 row for additional cards
 var maxColumns = 4;
@@ -41,10 +42,67 @@ function populateCards() {
 }
 
 function cardClicked(index) {
-//    playgroundModel.remove(index);
-//    cardsOnScreen--;
-//    populateCards();
+    var selected = playgroundModel.get(index).cardClicked;
+    playgroundModel.get(index).cardClicked = !selected;
 
-    var wasClicked = playgroundModel.get(index).cardClicked;
-    playgroundModel.get(index).cardClicked = !wasClicked;
+    if (selected) {
+        // undo changes
+        console.assert(currentSetSize > 0)
+        chosenSetCards[currentSetSize] = -1;
+        currentSetSize--;
+    } else {
+        chosenSetCards[currentSetSize] = index;
+        currentSetSize++;
+
+        // check for set if 3rd card was clicked
+        if (currentSetSize == 3) {
+            var isSet = true;
+            var cardType = playgroundModel.get(index).cardType;
+
+            for(var i=0; i < chosenSetCards.length; i++) {
+                console.assert(chosenSetCards[i] !== -1);
+                if(playgroundModel.get(chosenSetCards[i]).cardType !== cardType) {
+                    isSet = false;
+                }
+            }
+
+            // Reset selection
+            for(i=0; i < chosenSetCards.length; i++) {
+//                playgroundModel.get(chosenSetCards[i]).cardClicked = false;
+           }
+
+            if(isSet) {
+                console.log("It is a set");
+                // Damn! After we remove the card, the model will move the cards... So, indexes got invalidated...
+                // So, we just iterate through model and remove everything is marked...  I wonder if there is a
+                // better solution for this...
+                for(i=0; i < cardsOnScreen; i++) {
+                    // Buuuuut.... What if one of the selected card is going to occupy the currently freed place?
+                    // Urgh... That's no way too ugly...
+                    if (checkDelete(i)) if (checkDelete(i)) if (checkDelete(i));
+                }
+
+                populateCards();
+            } else {
+                console.log("It is not a set");
+           }
+
+            // Reset set state
+            for(i=0; i < chosenSetCards.length; i++) {
+                chosenSetCards[i] = -1;
+            }
+            currentSetSize = 0;
+        }
+    }
+
+}
+
+function checkDelete(index) {
+    var card = playgroundModel.get(index);
+    if ( card && card.cardClicked ) {
+        playgroundModel.remove(index);
+        cardsOnScreen--;
+        return true;
+    }
+    return false;
 }
