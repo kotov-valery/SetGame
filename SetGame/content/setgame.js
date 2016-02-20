@@ -23,7 +23,7 @@ function startGame() {
     // the array
     cardsArray = new Array(maxCardsCount);
     for (var i=0; i<maxCardsCount; i++) {
-        cardsArray[i] = Math.floor(Math.random()*2) + 1; // [1,2]
+        cardsArray[i] = Math.floor(Math.random()*3) + 1; // [1,3]
     }
 
     populateCards();
@@ -74,18 +74,29 @@ function cardClicked(index) {
                 for(i=0; i < cardsOnScreen; i++) {
                     // Buuuuut.... What if one of the selected card is going to occupy the currently freed place?
                     // Urgh... That's no way too ugly...
-                    if (checkDelete(i)) if (checkDelete(i)) if (checkDelete(i));
+                    if (checkDelete(i)) {
+                        if (checkDelete(i)) {
+                            if (checkDelete(i)) {}
+                        }
+                    }
                 }
 
                 populateCards();
             } else {
                 console.log("It is not a set");
+
            }
 
             // Reset set state
+            for(i=0; i< cardsOnScreen; i++) {
+                if(playgroundModel.get(i).cardClicked) {
+                    playgroundModel.get(i).cardClicked = false;
+                }
+             }
             for(i=0; i < chosenSetCards.length; i++) {
                 chosenSetCards[i] = -1;
             }
+            currentSetSize = 0;
         }
     }
 
