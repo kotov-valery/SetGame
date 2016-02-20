@@ -5,7 +5,8 @@
         <file>content/images/background.png</file>
         <file>content/Button.qml</file>
         <file>content/setgame.js</file>
-        <file>content/images/simple-card-type-1.png</file>
-        <file>content/images/simple-card-type-2.png</file>
+        <file>content/images/card-curly-1-purple-filled.svg</file>
+        <file>content/images/card-oval-1-red-filled.svg</file>
+        <file>content/images/card-rect-1-green-filled.svg</file>
     </qresource>
 </RCC>

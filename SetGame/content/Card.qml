@@ -9,9 +9,11 @@ Item {
 
     Component.onCompleted: {
         if (type == 1) {
-            cardContent.source = "qrc:/setgame/content/images/simple-card-type-1.png"
+            cardContent.source = "qrc:/setgame/content/images/card-oval-1-red-filled.svg"
         } else if (type == 2) {
-            cardContent.source = "qrc:/setgame/content/images/simple-card-type-2.png"
+            cardContent.source = "qrc:/setgame/content/images/card-rect-1-green-filled.svg"
+        } else if (type == 3) {
+            cardContent.source = "qrc:/setgame/content/images/card-curly-1-purple-filled.svg"
         }
     }
 
