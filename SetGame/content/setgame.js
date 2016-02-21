@@ -33,9 +33,13 @@ function populateCards() {
     while((cardsOnScreen < maxCardsOnScreen) &&
           (cardsArray.length > 0)) {
         // Add card with appropriate type on the screen
+        var cardType = cardsArray.pop() - 1;
         playgroundModel.append({
-            "cardType" : cardsArray.pop(),
-            "cardClicked" : false
+            "cardClicked" : false,
+            "cardType": cardType,
+            "cardCount": 1,
+            "cardColor": cardType,
+            "cardFilling": 2 // filled
         });
         cardsOnScreen++;
     }
@@ -55,7 +59,7 @@ function cardClicked(index) {
         currentSetSize++;
 
         // check for set if 3rd card was clicked
-        if (currentSetSize == 3) {
+        if (currentSetSize == maxSetSize) {
             var isSet = true;
             var cardType = playgroundModel.get(index).cardType;
 

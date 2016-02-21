@@ -4,17 +4,41 @@ import QtGraphicalEffects 1.0
 Item {
     id: card
 
-    property int type: -1
+    //Oh... I miss C++ enums soooo much! =(
+    property var availableTypes: [
+        "oval", // 0
+        "rect", // 1
+        "curly" // 2
+    ]
+
+    property var availableColors: [
+        "red",      // 0
+        "green",    // 1
+        "purple"    // 2
+    ]
+
+    property var availableFilling: [
+        "empty",   // 0
+        "stripes", // 1
+        "filled"   // 2
+    ]
+
+    property int figuresType: -1
+    property int figuresCount: -1
+    property int figuresColor: -1
+    property int figuresFilling: -1
+
     property bool clicked: false
 
     Component.onCompleted: {
-        if (type == 1) {
-            cardContent.source = "qrc:/setgame/content/images/card-oval-1-red-filled.svg"
-        } else if (type == 2) {
-            cardContent.source = "qrc:/setgame/content/images/card-rect-1-green-filled.svg"
-        } else if (type == 3) {
-            cardContent.source = "qrc:/setgame/content/images/card-curly-1-purple-filled.svg"
-        }
+        cardContent.source = compileSourceName();
+    }
+
+    function compileSourceName() {
+        console.assert(figuresType >= 0 && figuresCount > 0 && figuresColor >= 0 && figuresFilling >= 0);
+        // Compose source name out of the properties:
+        // card-<type>-<count>-<color>-<filling>.svg
+        return "qrc:/setgame/content/images/card-" + availableTypes[figuresType] + "-" + figuresCount + "-" + availableColors[figuresColor] + "-" + availableFilling[figuresFilling] + ".svg";
     }
 
     Image {
