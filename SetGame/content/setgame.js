@@ -72,31 +72,29 @@ function cardClicked(index) {
 
             if(isSet) {
                 console.log("It is a set");
-                // Damn! After we remove the card, the model will move the cards... So, indexes got invalidated...
-                // So, we just iterate through model and remove everything is marked...  I wonder if there is a
-                // better solution for this...
-                for(i=0; i < cardsOnScreen; i++) {
-                    // Buuuuut.... What if one of the selected card is going to occupy the currently freed place?
-                    // Urgh... That's no way too ugly...
-                    if (checkDelete(i)) {
-                        if (checkDelete(i)) {
-                            if (checkDelete(i)) {}
-                        }
-                    }
+                // Sort indexes in a reverse order. Thus, remove from the model is safe
+                chosenSetCards = chosenSetCards.sort(function (a, b) {
+                    return b-a;
+                });
+
+                for(i=0; i<chosenSetCards.length; i++) {
+                    var index = chosenSetCards[i];
+                    playgroundModel.get(index).cardClicked = false;
+                    playgroundModel.remove(index);
                 }
 
+                cardsOnScreen = cardsOnScreen - 3;
                 populateCards();
             } else {
                 console.log("It is not a set");
-
+                // Reset set state
+                for(i=0; i< cardsOnScreen; i++) {
+                    if(playgroundModel.get(i).cardClicked) {
+                        playgroundModel.get(i).cardClicked = false;
+                    }
+                }
            }
 
-            // Reset set state
-            for(i=0; i< cardsOnScreen; i++) {
-                if(playgroundModel.get(i).cardClicked) {
-                    playgroundModel.get(i).cardClicked = false;
-                }
-             }
             for(i=0; i < chosenSetCards.length; i++) {
                 chosenSetCards[i] = -1;
             }
