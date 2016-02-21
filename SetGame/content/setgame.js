@@ -103,13 +103,3 @@ function cardClicked(index) {
     }
 
 }
-
-function checkDelete(index) {
-    var card = playgroundModel.get(index);
-    if ( card && card.cardClicked ) {
-        playgroundModel.remove(index);
-        cardsOnScreen--;
-        return true;
-    }
-    return false;
-}
