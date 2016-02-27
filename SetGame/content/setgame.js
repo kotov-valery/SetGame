@@ -47,6 +47,7 @@ function startGame() {
     var counter = 0;
     for(var t=0; t < availableTypes.length; t++) {
         var jsonCardType = "{";
+        jsonCardType += "\"cardClicked\" : false,";
         jsonCardType += "\"cardType\": \"" + availableTypes[t] + "\",";
         for(var c=0; c < availableColors.length; c++) {
             var jsonCardColor = "\"cardColor\": \"" + availableColors[c] + "\",";
@@ -77,14 +78,11 @@ function populateCards() {
     }
 }
 
+// TODO: implement correct set check
 function cardClicked(index) {
-//    var selected = playgroundModel.get(index).cardClicked;
-//    playgroundModel.get(index).cardClicked = !selected;
+    var selected = playgroundModel.get(index).cardClicked;
+    playgroundModel.get(index).cardClicked = !selected;
 
-    // TODO: implement correct set check
-    playgroundModel.remove(index);
-    cardsOnScreen--;
-    populateCards();
 
 //    if (selected) {
 //        // undo changes

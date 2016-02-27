@@ -59,6 +59,8 @@ Window {
             height: playgroundView.cellHeight
 
             Card {
+                clicked: cardClicked
+
                 figuresType: cardType
                 figuresCount: cardCount
                 figuresColor: cardColor

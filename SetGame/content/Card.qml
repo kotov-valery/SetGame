@@ -12,9 +12,7 @@ Item {
     property bool clicked: false
 
     Component.onCompleted: {
-        var sourceName = compileSourceName();
-        console.log("Card source name:" + sourceName);
-        cardContent.source = sourceName;
+        cardContent.source = compileSourceName();
     }
 
     function compileSourceName() {
@@ -28,13 +26,13 @@ Item {
         id: cardContent
         anchors.fill: parent
 
-//        HueSaturation {
-//            id: hueSaturationEffect
-//            anchors.fill: cardContent
-//            source: cardContent
-//            lightness: -0.1
-//            opacity: 0
-//        }
+        HueSaturation {
+            id: hueSaturationEffect
+            anchors.fill: cardContent
+            source: cardContent
+            lightness: -0.1
+            opacity: 0
+        }
 
 //        GaussianBlur {
 //            id: gaussianBlurEffect
@@ -51,10 +49,10 @@ Item {
     states: [
         State { name: "Unselsected"; when: clicked == false
 //            PropertyChanges { target: gaussianBlurEffect; opacity: 0 }
-//            PropertyChanges { target: hueSaturationEffect; opacity: 0 }
+            PropertyChanges { target: hueSaturationEffect; opacity: 0 }
         },
         State { name: "Selected"; when: clicked == true
-//            PropertyChanges { target: hueSaturationEffect; opacity: 1 }
+            PropertyChanges { target: hueSaturationEffect; opacity: 1 }
 //            PropertyChanges { target: gaussianBlurEffect; opacity: 1 }
         }
     ]
