@@ -100,56 +100,67 @@ function cardClicked(index) {
     playgroundModel.get(index).cardClicked = !selected;
 
 
-//    if (selected) {
-//        // undo changes
-//        console.assert(currentSetSize > 0)
-//        chosenSetCards[currentSetSize] = -1;
-//        currentSetSize--;
-//    } else {
-//        chosenSetCards[currentSetSize] = index;
-//        currentSetSize++;
+    if (selected) {
+        // undo changes
+        console.assert(currentSetSize > 0)
+        chosenSetCards[currentSetSize] = -1;
+        currentSetSize--;
+    } else {
+        chosenSetCards[currentSetSize] = index;
+        currentSetSize++;
 
-//        // check for set if 3rd card was clicked
-//        if (currentSetSize == maxSetSize) {
-//            var isSet = true;
-//            var cardType = playgroundModel.get(index).cardType;
+        // check for set if 3rd card was clicked
+        if (currentSetSize == maxSetSize) {
 
-//            for(var i=0; i < chosenSetCards.length; i++) {
-//                console.assert(chosenSetCards[i] !== -1);
-//                if(playgroundModel.get(chosenSetCards[i]).cardType !== cardType) {
-//                    isSet = false;
-//                }
-//            }
+            // check if selected cards is a set
+            var card1 = playgroundModel.get(chosenSetCards[0]);
+            var card2 = playgroundModel.get(chosenSetCards[1]);
+            var card3 = playgroundModel.get(chosenSetCards[2]);
 
-//            if(isSet) {
-//                console.log("It is a set");
-//                // Sort indexes in a reverse order. Thus, remove from the model is safe
-//                chosenSetCards = chosenSetCards.sort(function (a, b) {
-//                    return b-a;
-//                });
+            var isSet = validateProperty(card1.cardType, card2.cardType, card3.cardType)
+                    && validateProperty(card1.cardCount, card2.cardCount, card3.cardCount)
+                    && validateProperty(card1.cardColor, card2.cardColor, card3.cardColor)
+                    && validateProperty(card1.cardFilling, card2.cardFilling, card3.cardFilling);
 
-//                for(i=0; i<chosenSetCards.length; i++) {
-//                    var index = chosenSetCards[i];
-//                    playgroundModel.get(index).cardClicked = false;
-//                    playgroundModel.remove(index);
-//                }
+            if(isSet) {
+                console.log("It is a set");
+                // Sort indexes in a reverse order. Thus, remove from the model is safe
+                chosenSetCards = chosenSetCards.sort(function (a, b) {
+                    return b-a;
+                });
 
-//                cardsOnScreen = cardsOnScreen - 3;
-//                populateCards();
-//            } else {
-//                console.log("It is not a set");
-//                // Reset set state
-//                for(i=0; i< cardsOnScreen; i++) {
-//                    if(playgroundModel.get(i).cardClicked) {
-//                        playgroundModel.get(i).cardClicked = false;
-//                    }
-//                }
-//           }
+                for(var i=0; i<chosenSetCards.length; i++) {
+                    var index = chosenSetCards[i];
+                    playgroundModel.get(index).cardClicked = false;
+                    playgroundModel.remove(index);
+                }
 
-//            for(i=0; i < chosenSetCards.length; i++) {
-//                chosenSetCards[i] = -1;
-//            }
-//            currentSetSize = 0;
-//        }
-//    }
+                cardsOnScreen = cardsOnScreen - 3;
+                populateCards();
+            } else {
+                console.log("It is not a set");
+                // Reset set state
+                for(i=0; i< cardsOnScreen; i++) {
+                    if(playgroundModel.get(i).cardClicked) {
+                        playgroundModel.get(i).cardClicked = false;
+                    }
+                }
+           }
+
+            for(i=0; i < chosenSetCards.length; i++) {
+                chosenSetCards[i] = -1;
+            }
+            currentSetSize = 0;
+        }
+    }
+}
+
+function validateProperty(prop1, prop2, prop3) {
+    if ((prop1 === prop2) && (prop2 === prop3))
+        return true;
+    else if ((prop1 !== prop2) && (prop2 !== prop3)
+             && (prop1 !== prop3))
+        return true;
+    else
+        return false;
 }
