@@ -64,6 +64,8 @@ function startGame() {
         }
     }
 
+    shuffle(cardsArray);
+
     populateCards();
 }
 
@@ -76,6 +78,20 @@ function populateCards() {
         playgroundModel.append(JSON.parse(jsonString));
         cardsOnScreen++;
     }
+}
+
+function shuffle(array) {
+    var n = array.length;
+    for(var i=0; i < n; i++) {
+        var r = getRandomInt(i, n-i);
+        var tmp = array[i];
+        array[i] = array[r];
+        array[r] = tmp;
+    }
+}
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 // TODO: implement correct set check
