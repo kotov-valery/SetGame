@@ -6,8 +6,8 @@ import "setgame.js" as SetGame
 
 Window {
     id: root
-    width: 320
-    height: 480
+    width: 480
+    height: 640
     visible: true
 
     SystemPalette { id: activePalette }
