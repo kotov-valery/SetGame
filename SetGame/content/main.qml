@@ -87,9 +87,22 @@ Window {
           y: parent.height - 30
 
           Button {
+              id: newGameButton
               anchors { left: parent.left; verticalCenter: parent.verticalCenter }
               text: "New Game"
               onClicked: SetGame.startGame();
+          }
+
+          Button {
+              id: giveMeMoreCardsButton
+              anchors {
+                  left: newGameButton.right;
+                  leftMargin: 10;
+                  verticalCenter: parent.verticalCenter
+              }
+              enabled: false
+              text: "Give me more cards!"
+              onClicked: SetGame.giveMeMoreCards();
           }
 
           Text {

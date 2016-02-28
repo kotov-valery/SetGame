@@ -67,6 +67,9 @@ function startGame() {
     shuffle(cardsArray);
 
     populateCards();
+
+    // enable "Give me more cards!" button
+    giveMeMoreCardsButton.enabled = true;
 }
 
 function populateCards() {
@@ -153,6 +156,12 @@ function cardClicked(index) {
             currentSetSize = 0;
         }
     }
+
+    // TODO: Check if there are no more sets on a board. If it is the case, end the game
+    // and notify the user
+    if (cardsOnScreen == 0) {
+        giveMeMoreCardsButton.enabled = false;
+    }
 }
 
 function validateProperty(prop1, prop2, prop3) {
@@ -163,4 +172,9 @@ function validateProperty(prop1, prop2, prop3) {
         return true;
     else
         return false;
+}
+
+
+function giveMeMoreCards() {
+    console.log("Will check if no sets are avavailable and add some additional cards");
 }

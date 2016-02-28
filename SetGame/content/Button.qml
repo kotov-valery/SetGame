@@ -18,7 +18,9 @@ Rectangle {
         GradientStop {
             position: 0.0
             color: {
-                if (mouseArea.pressed)
+                if (!enabled)
+                    return Qt.darker(activePalette.dark);
+                else if (mouseArea.pressed)
                     return activePalette.dark
                 else
                     return activePalette.light
