@@ -72,6 +72,7 @@ Window {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
+                        infoMessage.close();
                         SetGame.cardClicked(index)
                     }
                 }
@@ -111,5 +112,8 @@ Window {
               text: "Score: Who knows?"
           }
     }
-}
 
+    InfoMessage {
+        id: infoMessage
+    }
+}

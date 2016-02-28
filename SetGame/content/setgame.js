@@ -77,7 +77,6 @@ function populateCards() {
           (cardsArray.length > 0)) {
         // Add card on the screen
         var jsonString = cardsArray.pop();
-        console.log("JSON: " + jsonString);
         playgroundModel.append(JSON.parse(jsonString));
         cardsOnScreen++;
     }
@@ -126,7 +125,8 @@ function cardClicked(index) {
                     && validateProperty(card1.cardFilling, card2.cardFilling, card3.cardFilling);
 
             if(isSet) {
-                console.log("It is a set");
+                infoMessage.open("info", "Well done! You had found a set! =)");
+
                 // Sort indexes in a reverse order. Thus, remove from the model is safe
                 chosenSetCards = chosenSetCards.sort(function (a, b) {
                     return b-a;
@@ -141,7 +141,9 @@ function cardClicked(index) {
                 cardsOnScreen = cardsOnScreen - 3;
                 populateCards();
             } else {
-                console.log("It is not a set");
+                infoMessage.open("warn", "I'm sorry, this is not a set... =( Please try other combination of cards" +
+                                 " or press \"Give me more cards!\" button to get additional cards.");
+
                 // Reset set state
                 for(i=0; i< cardsOnScreen; i++) {
                     if(playgroundModel.get(i).cardClicked) {
