@@ -10,6 +10,8 @@ Window {
     height: 640
     visible: true
 
+    property bool enableHints: true
+
     SystemPalette { id: activePalette }
 
     Image {
@@ -59,7 +61,10 @@ Window {
             height: playgroundView.cellHeight
 
             Card {
+                id: cardContent
+
                 clicked: cardClicked
+                highlightHint: cardHighlightHint
 
                 figuresType: cardType
                 figuresCount: cardCount
@@ -103,7 +108,7 @@ Window {
               }
               enabled: false
               text: "Give me more cards!"
-              onClicked: SetGame.giveMeMoreCards();
+              onClicked: SetGame.giveMeMoreCards(enableHints);
           }
 
           Text {

@@ -4,6 +4,7 @@ var cardsOnScreen = 0;
 var maxSetSize = 3;
 var currentSetSize = 0;
 var chosenSetCards = new Array(maxSetSize);
+var hintArray = new Array(maxSetSize);
 
 var maxRows = 4; // 4 by default + 1 row for additional cards
 var maxColumns = 4;
@@ -48,6 +49,7 @@ function startGame() {
     for(var t=0; t < availableTypes.length; t++) {
         var jsonCardType = "{";
         jsonCardType += "\"cardClicked\" : false,";
+        jsonCardType += "\"cardHighlightHint\" : false,";
         jsonCardType += "\"cardType\": \"" + availableTypes[t] + "\",";
         for(var c=0; c < availableColors.length; c++) {
             var jsonCardColor = "\"cardColor\": \"" + availableColors[c] + "\",";
@@ -154,6 +156,7 @@ function cardClicked(index) {
 
             for(i=0; i < chosenSetCards.length; i++) {
                 chosenSetCards[i] = -1;
+                hintArray[i] = -1;
             }
             currentSetSize = 0;
         }
@@ -177,10 +180,12 @@ function validateProperty(prop1, prop2, prop3) {
 }
 
 
-function giveMeMoreCards(showHint) {
-    if (isThereASet(showHint))
-        infoMessage.open("info", "There is at least one set available! Please try to find it");
-    else {
+function giveMeMoreCards(enableHints) {
+    if (isThereASet()) {
+        infoMessage.open("hint", "There is at least one set available! Please try to find it!");
+        if (enableHints)
+            highlightHint();
+    } else {
         // Add 3 additional cards on a screen
         var counter = 0;
         while((conter < 3) && (cardsArray.length > 0)) {
@@ -192,13 +197,15 @@ function giveMeMoreCards(showHint) {
     }
 }
 
-function isThereASet(showHint) {
+function isThereASet() {
     var N = playgroundModel.count;
     for(var i=0; i<N; i++) {
         var card1 = playgroundModel.get(i);
         for(var j=1; j<N; j++) {
+            if (i == j) continue;
             var card2 = playgroundModel.get(j);
             for(var k=2; k<N; k++) {
+                if(j == k) continue;
                 var card3 = playgroundModel.get(k);
 
                 if (validateProperty(card1.cardType, card2.cardType, card3.cardType)
@@ -206,9 +213,9 @@ function isThereASet(showHint) {
                     && validateProperty(card1.cardColor, card2.cardColor, card3.cardColor)
                     && validateProperty(card1.cardFilling, card2.cardFilling, card3.cardFilling)) {
 
-                    if(showHint) {
-                        // TODO: Highlight a set if hint mode is enabled
-                    }
+                    hintArray[0] = i;
+                    hintArray[1] = j;
+                    hintArray[2] = k;
 
                     return true;
                 }
@@ -216,4 +223,13 @@ function isThereASet(showHint) {
         }
     }
     return false;
+}
+
+function highlightHint() {
+    for(var i=0; i<hintArray.length; i++) {
+        if(hintArray[i] >= 0) {
+            console.log("highlight card: " + hintArray[i]);
+            playgroundModel.get(hintArray[i]).cardHighlightHint = true;
+        }
+    }
 }

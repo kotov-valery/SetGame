@@ -20,8 +20,12 @@ Rectangle {
             color: {
                 if (type == "info")
                     return "gray";
-                else
+                else if(type == "warn")
                     return "red";
+                else if(type == "hint")
+                    return "yellow";
+                else
+                    return "white";
             }
         }
     }
@@ -77,10 +81,11 @@ Rectangle {
     }
 
     onOpacityChanged: {
-        if(opacity == 1)
+        if(opacity == 1) {
             showTimeout.restart();
-        else if(opacity == 0)
+        } else if(opacity == 0) {
             showTimeout.stop();
+        }
     }
 
     states: [

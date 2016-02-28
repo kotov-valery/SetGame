@@ -10,6 +10,7 @@ Item {
     property string figuresFilling: ""
 
     property bool clicked: false
+    property bool highlightHint: false
 
     Component.onCompleted: {
         cardContent.source = compileSourceName();
@@ -42,6 +43,25 @@ Item {
 //            samples: 16
 //            opacity: 0
 //        }
+    }
+
+    Timer {
+        id: hightlightTimeout
+        interval: 3000
+        running: false;
+        repeat: false;
+        onTriggered: { parent.highlightHint = false }
+    }
+
+    onHighlightHintChanged: {
+        console.log("highlightHint: " + highlightHint);
+        if (highlightHint == true) {
+            clicked = true;
+            hightlightTimeout.restart();
+        } else {
+            clicked = false;
+            hightlightTimeout.stop();
+        }
     }
 
     // TODO: There is a really wierd glich. From time to time when you click on a card you see blurred (and shaded)
