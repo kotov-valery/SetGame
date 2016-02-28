@@ -177,6 +177,43 @@ function validateProperty(prop1, prop2, prop3) {
 }
 
 
-function giveMeMoreCards() {
-    console.log("Will check if no sets are avavailable and add some additional cards");
+function giveMeMoreCards(showHint) {
+    if (isThereASet(showHint))
+        infoMessage.open("info", "There is at least one set available! Please try to find it");
+    else {
+        // Add 3 additional cards on a screen
+        var counter = 0;
+        while((conter < 3) && (cardsArray.length > 0)) {
+            var jsonString = cardsArray.pop();
+            playgroundModel.append(JSON.parse(jsonString));
+            cardsOnScreen++;
+            counter++;
+        }
+    }
+}
+
+function isThereASet(showHint) {
+    var N = playgroundModel.count;
+    for(var i=0; i<N; i++) {
+        var card1 = playgroundModel.get(i);
+        for(var j=1; j<N; j++) {
+            var card2 = playgroundModel.get(j);
+            for(var k=2; k<N; k++) {
+                var card3 = playgroundModel.get(k);
+
+                if (validateProperty(card1.cardType, card2.cardType, card3.cardType)
+                    && validateProperty(card1.cardCount, card2.cardCount, card3.cardCount)
+                    && validateProperty(card1.cardColor, card2.cardColor, card3.cardColor)
+                    && validateProperty(card1.cardFilling, card2.cardFilling, card3.cardFilling)) {
+
+                    if(showHint) {
+                        // TODO: Highlight a set if hint mode is enabled
+                    }
+
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
