@@ -190,7 +190,7 @@ function giveMeMoreCards(enableHints) {
     } else {
         // Add 3 additional cards on a screen
         var counter = 0;
-        while((conter < 3) && (cardsArray.length > 0)) {
+        while((counter < 3) && (cardsArray.length > 0)) {
             var jsonString = cardsArray.pop();
             playgroundModel.append(JSON.parse(jsonString));
             cardsOnScreen++;
