@@ -29,8 +29,8 @@ Rectangle {
     border.color: "black"
     border.width: 5
 
-    width: 200
-    height: 200
+    width: 250
+    height: 250
 
     anchors {
         centerIn: parent
@@ -70,7 +70,7 @@ Rectangle {
 
     Timer {
         id: showTimeout
-        interval: 3000
+        interval: 4000
         running: false
         repeat:  false
         onTriggered: { parent.opacity = 0 }
