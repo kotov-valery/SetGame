@@ -50,10 +50,19 @@ Window {
         }
 
         remove: Transition {
-            ParallelAnimation {
-                NumberAnimation { property: "opacity"; to: 0; duration: 500 }
+            NumberAnimation { property: "opacity"; to: 0; duration: 500 }
+        }
+
+        Timer {
+            id: hintTimer
+            interval: 3000
+            running: false
+            repeat: false
+            onTriggered: {
+                SetGame.highlightHint(false);
             }
         }
+
 
         delegate: Item {
             id: cardWrapper
@@ -64,7 +73,7 @@ Window {
                 id: cardContent
 
                 clicked: cardClicked
-                highlightHint: cardHighlightHint
+                hintHighlight: cardHintHighlight
 
                 figuresType: cardType
                 figuresCount: cardCount

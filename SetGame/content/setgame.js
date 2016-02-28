@@ -49,7 +49,7 @@ function startGame() {
     for(var t=0; t < availableTypes.length; t++) {
         var jsonCardType = "{";
         jsonCardType += "\"cardClicked\" : false,";
-        jsonCardType += "\"cardHighlightHint\" : false,";
+        jsonCardType += "\"cardHintHighlight\": false,";
         jsonCardType += "\"cardType\": \"" + availableTypes[t] + "\",";
         for(var c=0; c < availableColors.length; c++) {
             var jsonCardColor = "\"cardColor\": \"" + availableColors[c] + "\",";
@@ -183,8 +183,10 @@ function validateProperty(prop1, prop2, prop3) {
 function giveMeMoreCards(enableHints) {
     if (isThereASet()) {
         infoMessage.open("hint", "There is at least one set available! Please try to find it!");
-        if (enableHints)
-            highlightHint();
+        if (enableHints) {
+            highlightHint(true);
+            hintTimer.restart();
+        }
     } else {
         // Add 3 additional cards on a screen
         var counter = 0;
@@ -225,11 +227,10 @@ function isThereASet() {
     return false;
 }
 
-function highlightHint() {
+function highlightHint(value) {
     for(var i=0; i<hintArray.length; i++) {
         if(hintArray[i] >= 0) {
-            console.log("highlight card: " + hintArray[i]);
-            playgroundModel.get(hintArray[i]).cardHighlightHint = true;
+            playgroundModel.get(hintArray[i]).cardHintHighlight = value;
         }
     }
 }

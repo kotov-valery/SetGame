@@ -10,7 +10,8 @@ Item {
     property string figuresFilling: ""
 
     property bool clicked: false
-    property bool highlightHint: false
+    property bool hintHighlight: false
+
 
     Component.onCompleted: {
         cardContent.source = compileSourceName();
@@ -43,37 +44,34 @@ Item {
 //            samples: 16
 //            opacity: 0
 //        }
-    }
 
-    Timer {
-        id: hightlightTimeout
-        interval: 3000
-        running: false;
-        repeat: false;
-        onTriggered: { parent.highlightHint = false }
-    }
-
-    onHighlightHintChanged: {
-        console.log("highlightHint: " + highlightHint);
-        if (highlightHint == true) {
-            clicked = true;
-            hightlightTimeout.restart();
-        } else {
-            clicked = false;
-            hightlightTimeout.stop();
+        Colorize {
+            id: colorizeEffect // for hint
+            anchors.fill: cardContent
+            source: cardContent
+            hue: 0.15
+            saturation: 1
+            lightness: -0.08
+            opacity: 0
         }
     }
 
     // TODO: There is a really wierd glich. From time to time when you click on a card you see blurred (and shaded)
     // image of a card with another type. States didn't helped...
     states: [
-        State { name: "Unselsected"; when: clicked == false
+        State { name: "Unselsected"; when: clicked == false && hintHighlight == false
 //            PropertyChanges { target: gaussianBlurEffect; opacity: 0 }
             PropertyChanges { target: hueSaturationEffect; opacity: 0 }
         },
-        State { name: "Selected"; when: clicked == true
+        State { name: "Selected"; when: clicked == true && hintHighlight == false
             PropertyChanges { target: hueSaturationEffect; opacity: 1 }
 //            PropertyChanges { target: gaussianBlurEffect; opacity: 1 }
+        },
+        State { name: "Highlighted"; when: hintHighlight == true && clicked == false
+            PropertyChanges { target: colorizeEffect; opacity: 1 }
+        },
+        State { name: "Unhighlighted"; when: hintHighlight == false && clicked == false
+            PropertyChanges { target: colorizeEffect; opacity: 0 }
         }
     ]
 }
