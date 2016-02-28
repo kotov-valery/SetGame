@@ -86,5 +86,6 @@
         <file>content/images/card-rect-3-red-empty.svg.png</file>
         <file>content/images/card-rect-3-red-filled.svg.png</file>
         <file>content/images/card-rect-3-red-stripes.svg.png</file>
+        <file>content/InfoMessage.qml</file>
     </qresource>
 </RCC>
